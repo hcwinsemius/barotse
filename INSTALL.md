@@ -21,28 +21,21 @@ You can check your path by richt-clicking on `This PC` on your desktop or in Win
 
 ![tty](png/System Properties.png)
 
-Test your installation by opening a command prompt and type `python`. You should see something like below.
+Test your installation by opening a command prompt and type `python`. You should see something like below. If this works you can close the window.
 
 ![tty](png/python_test.png)
-
-## Clone this repository (if you haven't already done that)
-Just go ahead and clone this repos to a local folder (e.g. `c:\git`). From command line this can be done by:
-```
-git clone https://github.com/hcwinsemius/barotse.git
-```
 
 ## Install the required libraries
 Now we will make a special environment for our work. This environment contains just those libraries that we need for this specific work. We can then make alternative environments side-by-side for other research. 
 
 All required libraries are collected in a so-called .yml file, which you can find in the repository. To use this file to create a new environment, just open a command prompt on the location of the cloned repository (e.g. `c:\git\barotse`) and type the following commands:
 ```
-conda config --add channels conda-forge
 conda env create -f environment.yml
 ```
 Now just follow instructions until the environment is entirely downloaded and built. This should take some time! Grab a coffee or something.
 
 ## installing the latest wflow code basis
-I have made a .bat file to help you with this. Just type the following on command line (in folder `c:\git\barotse`) to get Wflow cloned and installed
+I have made a .bat file to help you with this. Just type the following on command line (in folder `c:\git\barotse`) to get Wflow  installed from the very latest github source code. Be aware that dependent on your internet speed, this may take a pretty long time.
 ```
 install_wflow
 ``` 
@@ -54,17 +47,29 @@ conda activate barotse
 ```
 After this command, you'll have all libraries available to python that you will need.
 
-## Test your environment
-If everything went as planned, you should now have a nice environment to work with. Test this by opening a python prompt in your `barotse` environment (see remark above) and type
-```
-import wflow
-```
-on the python command prompt. If that does not give errors, everything should be installed as intended. 
-
 ## Get the Wflow model for the upper Zambezi
 As preparation we have two Wflow-SBM hydrological models for the Zambezi. These can be found temporarily under the links below:
 * 4km resolution version: http://gofile.me/6BU21/olZbk4IsJ
 * 1km resolution version: http://gofile.me/6BU21/NVFBdUi9e
-Download and unzip these into a easy to find location (e.g. `c:\wflow\zambezi_1km`)
+Download and unzip these into a easy to find location (e.g. `c:\wflow\zambezi_4km`)
 
-You can now start working on the models within python. Starting point is the folder `notebooks`. You can easily start a jupyter notebook environment using the batch file `start_jupyter.bat`. Just fire it up and you'll get a notebook server in the `barotse` environment. For more extended modular coding and coding functionalities, the folder src can be used.
+## Test your environment
+If everything went as planned, you should now have a nice environment to work with. Test this by activating your `barotse` environment (see remark above) and type
+```
+python -m wflow.wflow_sbm -C <PATH-TO-MODEL> -R testing
+```
+`<PATH-TO-MODEL>` should of course be replaced by the base path of the model, for instance `c:\wflow\zambezi_4km`
+If that does not give errors, everything should be installed as intended. 
+
+## Notebooks
+Just go ahead and clone the repository from which you read this to a local folder (e.g. `c:\git`). You can use graphical tools such as TortoiseGit. From command line this can be done by executing this from within your git root folder (e.g. `c:\git`):
+```
+git clone https://github.com/hcwinsemius/barotse.git
+```
+You can now start working on the models within python jupyter notebooks. Starting point is the folder `notebooks`. You can easily start a jupyter notebook environment using the batch file `start_jupyter.bat`. Just fire it up and you'll get a notebook server in the `barotse` environment. For more extended modular coding and coding functionalities, the folder src can be used.
+
+## Install BMI enabled LISFLOOD-FP
+To be completed. Awaiting a Windows LISFLOOD-FP with BMI executable.
+
+## Install GLOFRIM coupling framework
+To be completed. Awaiting a Windows LISFLOOD-FP with BMI executable.
