@@ -19,7 +19,7 @@ If you installed a fresh version of Anaconda, this step is not needed. If you sk
 
 You can check your path by richt-clicking on `This PC` on your desktop or in Windows Explorer, select `Properties`, `Advanced System Settings`, `Environment Variables`. Then select Path and Edit. Check if the Path entries with Miniconda3 are present. If they are not, please locate the correct paths and add them here. Move all folders to the top to give them the highest priority.
 
-![tty](png/System Properties.png)
+![tty](png/sys_props.png)
 
 Test your installation by opening a command prompt and type `python`. You should see something like below. If this works you can close the window.
 
