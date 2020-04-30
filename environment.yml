@@ -7,6 +7,9 @@ channels:
 dependencies:
   - python=3.6
   - pcraster
+  - cartopy
+  - rasterio
+  - rtree
   - numpy>=1.12
   - scipy>=1.0
   - gdal>=3
@@ -24,5 +27,10 @@ dependencies:
   - sphinx
   - sphinx_rtd_theme
   - matplotlib
+  - hvplot
+  - datashader
+  - bokeh
   - pip:
     - bmi-python
+    - pyviz
+    - git+https://github.com/openstreams/wflow.git
