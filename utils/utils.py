@@ -114,3 +114,37 @@ def discharge(da_x, da_y, feats, key='name', reverse=False):
     qs = [discharge_f(da_x, da_y, feat, key, reverse=reverse) for feat in feats]
     qs = [i for i in qs if i is not None]
     return xr.concat(qs, dim='station')
+
+def list_to_dataarray(data, time, x, y, name, attrs):
+    """
+    Converts list of data slices (per time) to a xarray DataArray with axes, name and attributes
+    :param data: list - containing all separate data slices per time step in 2D numpy arrays
+    :param time: list - containing datetime objects as retrieved from bmi model
+    :param x: 1D numpy array - x-coordinates
+    :param y: 1D numpy array - y-coordinates
+    :param name: string - name to provide to DataArray
+    :param attrs: dict - attrs to provide to DataArray
+    :return: DataArray of data
+    """
+    return xr.DataArray(data,
+                        name=name,
+                        dims=('time', 'y', 'x'),
+                        coords={'time': time,
+                                'y': y,
+                                'x': x
+                               },
+                        attrs=attrs
+                       )
+
+def merge_outputs(datas, time, x, y, names, attributes):
+    """
+    Converts datasets collected per time step from bmi run to xarray Dataset
+    :param datas: list of lists with collected datasets (in 2D numpy slices per time step)
+    :param time: list - containing datetime objects as retrieved from bmi model
+    :param x: 1D numpy array - x-coordinates
+    :param y: 1D numpy array - y-coordinates
+    :param names: list - containing strings with names of datas
+    :param attributes: list - containing attributes belonging to datas
+    :return: Dataset of all data in datas
+    """
+    return xr.merge([list_to_dataarray(data, time, x, y, name, attrs) for data, name, attrs in zip(datas, names, attributes)])
