@@ -91,10 +91,11 @@ def discharge_f(da_x, da_y, feat, key='name', reverse=False):
 
         flow_x = (da_x * flow_directions['west_east']).sum(dim=('x', 'y'))
         flow = flow_x + flow_y
-        flow.name = feat['properties']['name']
         flow.attrs['units'] = da_x.units
         flow.attrs['short_name'] = 'river_discharge'
-
+        # expand dimensions and add name
+        flow = flow.expand_dims({'station': 1})
+        flow = flow.assign_coords({'station': [feat['properties']['name']]})
         return flow
     else:
         return None
@@ -112,4 +113,4 @@ def discharge(da_x, da_y, feats, key='name', reverse=False):
     """
     qs = [discharge_f(da_x, da_y, feat, key, reverse=reverse) for feat in feats]
     qs = [i for i in qs if i is not None]
-    return xr.merge(qs)
+    return xr.concat(qs, dim='station')
