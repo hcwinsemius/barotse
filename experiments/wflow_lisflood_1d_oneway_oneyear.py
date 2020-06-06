@@ -18,17 +18,6 @@ from glofrim import Glofrim
 sys.path.append('../utils')
 import utils
 
-# def list_to_dataarray(data, time, x, y, name, attrs):
-#     return xr.DataArray(data,
-#                         name=name,
-#                         dims=('time', 'y', 'x'),
-#                         coords={'time': time,
-#                                 'y': y,
-#                                 'x': x
-#                                },
-#                         attrs=attrs
-#                        )
-
 # Setup the Glofrim object with the Glofrim .ini file
 cbmi = Glofrim()
 root_dir = os.path.abspath('.')
