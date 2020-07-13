@@ -11,11 +11,13 @@ from glofrim import Glofrim
 # import barotse utils (first add path to be able to recognize it
 sys.path.append('../utils')
 import utils
-
+# from utils import update_funcs
+Glofrim.update = utils.update_funcs.update_glofrim
+Glofrim._models['LFP'].update = utils.update_funcs.update_lfp
 # Setup the Glofrim object with the Glofrim .ini file
 cbmi = Glofrim()
 root_dir = os.path.abspath('.')
-config_fn = os.path.join(root_dir, 'glofrim_barotse_1way1D2D.ini')
+config_fn = os.path.join(root_dir, 'glofrim_barotse_2way1D2D.ini')
 cbmi.logger.info('Reading config for cbmi model from {:s}'.format(config_fn))
 cbmi.initialize_config(config_fn)
 
@@ -50,15 +52,47 @@ Qx = []
 Qy = []
 time = []
 timesteps = 365
-cbmi.logger.info('Running 1d2d experiment for {:d} timesteps'.format(timesteps))
+cbmi.logger.info('Running 2-way 1d2d experiment for {:d} timesteps'.format(timesteps))
 # manually set exchange to additive
 cbmi.exchanges[2][1]['add'] = True
+
+# make a projection function from LFP to WFL
+wfl_grid = cbmi.bmimodels['WFL'].grid
+lfp_grid = cbmi.bmimodels['LFP'].grid
+reproject_lfp_wflow = lambda data, nodata: rasterio.warp.reproject(
+    data,
+    destination=np.zeros((wfl_grid.height, wfl_grid.width)),
+    src_transform=lfp_grid.transform,
+    src_crs=lfp_grid.crs,
+    src_nodata=nodata,
+    dst_transform=wfl_grid.transform,
+    dst_crs=wfl_grid.crs,
+    dst_nodata=nodata,
+    resampling=rasterio.enums.Resampling.average
+    )[0]
+
 
 try:
     i = 0
     while i < timesteps:
         print(cbmi.get_current_time())
-        cbmi.update()
+        # cbmi.update()
+
+        # run wflow and lfp (inc. reinfiltration) for one step (assuming infiltration rate of 30./86400 mm per second)
+        cbmi.update(infiltcap=30. / 86400, storagecap=1e6)
+
+        # retrieve and reproject infiltration to wflow grid
+        infilt_wfl = reproject_lfp_wflow(cbmi.bmimodels['LFP'].infilt, np.nan)
+
+        # remove any missing values to prevent model crash
+        infilt_wfl[np.isnan(infilt_wfl)] = 0.
+
+        # add infiltration to snow water store so that it will infiltrate into wflow in the next step
+        snow = cbmi.bmimodels['WFL']._bmi.get_value('Snow')
+        snow += np.flipud(infilt_wfl)
+        cbmi.bmimodels['WFL']._bmi.set_value('Snow', snow)
+
+        # administer the current time step outputs
         time.append(cbmi.get_current_time())
         h = cbmi.get_value('LFP.H')
 
@@ -128,7 +162,7 @@ y = rasterio.transform.xy(cbmi.bmimodels['LFP'].grid.transform, yi[:,0].flatten(
 cbmi.logger.info('Merging outputs to Dataset')
 ds = utils.merge_outputs(datas, time, x, y, LFP_outputs, LFP_attrs)
 # xr.merge([list_to_dataarray(data, t,xs, ys, name, attrs) for data, name, attrs in zip(datas, LFP_outputs, LFP_attrs)])
-fn_out = os.path.abspath('test2_oneyear_1D2D.nc')
+fn_out = os.path.abspath('test2_oneyear_2way_1D2D.nc')
 cbmi.logger.info('Writing outputs to {:s}'.format(fn_out))
 encoding = {name: {'zlib': True} for name in LFP_outputs}
 ds.to_netcdf(fn_out, encoding=encoding)
