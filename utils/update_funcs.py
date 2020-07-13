@@ -4,7 +4,6 @@
 
 import numpy as np
 
-
 def update_glofrim(self, dt=None, **kwargs):
     """Updating model for a certain time step interval (default: None).
     checks whether model end time is already reached;

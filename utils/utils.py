@@ -5,6 +5,7 @@ import numpy as np
 import rasterio
 import rasterio.features
 from scipy.signal import convolve2d
+import update_funcs
 
 def perpendicular(line, reverse=False):
     """
