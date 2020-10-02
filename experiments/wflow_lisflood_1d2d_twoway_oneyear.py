@@ -18,12 +18,20 @@ Glofrim._models['LFP'].update = utils.update_funcs.update_lfp
 cbmi = Glofrim()
 root_dir = os.path.abspath('.')
 config_fn = os.path.join(root_dir, 'glofrim_barotse_2way1D2D.ini')
+
+# prepare results location
+out_folder = os.path.abspath('../results')
+if not os.path.isdir(out_folder):
+    os.makedirs(out_folder)
+fn_out = os.path.join(out_folder, 'test_oneyear_2way_1D2D.nc')
+cbmi.logger.info(f'Results will be written to {fn_out}')
+
 cbmi.logger.info('Reading config for cbmi model from {:s}'.format(config_fn))
 cbmi.initialize_config(config_fn)
 
 # Set a start and end time interactively. Now just a couple of days for testing
-t_start = datetime(2000,10,1)
-t_end = datetime(2001,10,1)
+t_start = datetime(2000,10, 1)
+t_end = datetime(2000, 10, 5)
 # t_end = datetime(2000,1,6)
 cbmi.set_start_time(t_start)
 cbmi.set_end_time(t_end)
@@ -51,7 +59,8 @@ Q = []
 Qx = []
 Qy = []
 time = []
-timesteps = 365
+timesteps = (t_end-t_start).days
+
 cbmi.logger.info('Running 2-way 1d2d experiment for {:d} timesteps'.format(timesteps))
 # manually set exchange to additive
 cbmi.exchanges[2][1]['add'] = True
@@ -162,7 +171,6 @@ y = rasterio.transform.xy(cbmi.bmimodels['LFP'].grid.transform, yi[:,0].flatten(
 cbmi.logger.info('Merging outputs to Dataset')
 ds = utils.merge_outputs(datas, time, x, y, LFP_outputs, LFP_attrs)
 # xr.merge([list_to_dataarray(data, t,xs, ys, name, attrs) for data, name, attrs in zip(datas, LFP_outputs, LFP_attrs)])
-fn_out = os.path.abspath('test2_oneyear_2way_1D2D.nc')
 cbmi.logger.info('Writing outputs to {:s}'.format(fn_out))
 encoding = {name: {'zlib': True} for name in LFP_outputs}
 ds.to_netcdf(fn_out, encoding=encoding)

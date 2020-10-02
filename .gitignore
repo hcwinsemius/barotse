@@ -1,7 +1,9 @@
 # inputs and model runs
 wflow/inmaps
 wflow/run_default
-
+lisflood/results_Barotse
+results
+experiments/*.wb
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
