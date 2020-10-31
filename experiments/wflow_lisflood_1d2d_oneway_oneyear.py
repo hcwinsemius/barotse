@@ -64,35 +64,35 @@ cbmi.logger.info('Running 1d2d experiment for {:d} timesteps'.format(timesteps))
 # manually set exchange to additive
 cbmi.exchanges[2][1]['add'] = True
 
-try:
-    i = 0
-    while i < timesteps:
-        print(cbmi.get_current_time())
-        cbmi.update()
-        time.append(cbmi.get_current_time())
-        h = cbmi.get_value('LFP.H')
+# try:
+i = 0
+while i < timesteps:
+    print(cbmi.get_current_time())
+    cbmi.update()
+    time.append(cbmi.get_current_time())
+    h = cbmi.get_value('LFP.H')
 
-        # compute the flood_depth (above terrain)
-        flood_depth = np.maximum(h+z-dem, 0)
-        # compute channel depth (below terrain, only in channels)
-        channel_depth = np.minimum(dem-z, h)
-        qx = cbmi.get_value('LFP.Qx')
-        qy = cbmi.get_value('LFP.Qy')
-        qx_mod = 0.5*qx[:-1, :-1]+0.5*qx[:-1, 1:]
-        # reverse flow so that positive is northward, and negative is southward
-        qy_mod = -0.5*qy[:-1, :-1]-0.5*qy[1:, :-1]
-        # reverse flow so that positive is northward, and negative is southward
-        # append all retrievals
-        H.append(h)
-        f.append(flood_depth)
-        c.append(channel_depth)
-        Q.append(cbmi.get_value('LFP.SGCQin'))
-        Qx.append(qx_mod)
-        Qy.append(qy_mod)
-        i += 1
-except Exception as e:
-    print(e)
-    sys.exit('something is going wrong in updating - please check!')
+    # compute the flood_depth (above terrain)
+    flood_depth = np.maximum(h+z-dem, 0)
+    # compute channel depth (below terrain, only in channels)
+    channel_depth = np.minimum(dem-z, h)
+    qx = cbmi.get_value('LFP.Qx')
+    qy = cbmi.get_value('LFP.Qy')
+    qx_mod = 0.5*qx[:-1, :-1]+0.5*qx[:-1, 1:]
+    # reverse flow so that positive is northward, and negative is southward
+    qy_mod = -0.5*qy[:-1, :-1]-0.5*qy[1:, :-1]
+    # reverse flow so that positive is northward, and negative is southward
+    # append all retrievals
+    H.append(h)
+    f.append(flood_depth)
+    c.append(channel_depth)
+    Q.append(cbmi.get_value('LFP.SGCQin'))
+    Qx.append(qx_mod)
+    Qy.append(qy_mod)
+    i += 1
+# except Exception as e:
+#     print(e)
+#     sys.exit('something is going wrong in updating - please check!')
 
 cbmi.logger.info('Setting up output structures')
 
@@ -145,5 +145,8 @@ ds.to_netcdf(fn_out, encoding=encoding)
 # close model
 cbmi.logger.info('Closing model')
 cbmi.finalize()
+
+# TODO: movie wflow results to results folder
+
 
 

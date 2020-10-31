@@ -1,5 +1,5 @@
 # a number of utilities that can be used to store and analyze results of GLOFRIM
-import fiona
+#import fiona
 import xarray as xr
 import numpy as np
 import rasterio
