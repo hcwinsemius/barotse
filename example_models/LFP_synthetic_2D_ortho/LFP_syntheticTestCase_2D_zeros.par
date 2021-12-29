@@ -2,20 +2,19 @@ DEMfile                  LFP_DEM.asc
 resroot                  res_synthetictestcase
 dirroot                  LFP_OUTPUT_2D
 sim_time                 94867200.0
-initial_tstep            600.0
+#sim_time                 600.0
+initial_tstep            1.0
 massint                  86400.0
-saveint                  94867200.0
-#bcifile					 LFP_boundaries_2D.bci
+#saveint                  94867200.0
+saveint                  60.0
+startfile                LFP_ini_after_run_closed_bci.start
+#bcifile					 LFP_boundaries_2D_closed.bci
 #bdyfile					 LFP_upstreamInflow_2D.bdy
 gaugefile				 LFP_crosssections.gauge
-#startfile				 LFP_ini_WL_1m.asc
 fpfric                   0.07
 SGCn                     0.04
 SGCr                     0.15
 SGCp                     0.65
 debug
-#startelev
-latlong
 acceleration
-#elevoff
-infiltration            0.4
+startelev
