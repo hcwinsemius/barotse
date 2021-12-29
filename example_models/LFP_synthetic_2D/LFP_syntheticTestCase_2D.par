@@ -5,17 +5,15 @@ sim_time                 94867200.0
 initial_tstep            600.0
 massint                  86400.0
 saveint                  94867200.0
-#bcifile					 LFP_boundaries_2D.bci
-#bdyfile					 LFP_upstreamInflow_2D.bdy
+bcifile					 LFP_boundaries_2D.bci
+bdyfile					 LFP_upstreamInflow_2D.bdy
 gaugefile				 LFP_crosssections.gauge
-#startfile				 LFP_ini_WL_1m.asc
+startfile				 LFP_ini_WL_0m.asc
 fpfric                   0.07
 SGCn                     0.04
 SGCr                     0.15
 SGCp                     0.65
 debug
-#startelev
+startelev
 latlong
 acceleration
-#elevoff
-infiltration            0.4

@@ -1,4 +1,4 @@
-name: barotse
+name: barotse2
 
 channels:
   - conda-forge
@@ -32,15 +32,14 @@ dependencies:
   - sphinx
   - sphinx_rtd_theme
   - matplotlib
-  - jupyter
-    #- hvplot
-    #- datashader
-    #- bokeh
-    #- pcraster
+  - hvplot
+  - datashader
+  - bokeh
+  - pcraster
   - wflow
   - pip:
     - bmi-python>=0.2.6
-      #- pyviz
+    - pyviz
     #- git+https://github.com/UU-Hydro/PCR_BMI.git@migrate_to_py3
     - git+https://github.com/openearth/glofrim.git
     #- git+https://github.com/openstreams/wflow.git
