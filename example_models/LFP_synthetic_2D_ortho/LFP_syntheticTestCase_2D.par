@@ -2,7 +2,7 @@ DEMfile                  LFP_DEM.asc
 resroot                  res_synthetictestcase
 dirroot                  LFP_OUTPUT_2D
 sim_time                 94867200.0
-initial_tstep            3600.0
+initial_tstep            10.0
 massint                  86400.0
 saveint                  94867200.0
 #bcifile					 LFP_boundaries_open_edge_only.bci
