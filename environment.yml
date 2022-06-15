@@ -1,45 +1,39 @@
-name: barotse2
+name: barotse3
 
 channels:
   - conda-forge
   - defaults
 
 dependencies:
-  - python>=3.7
+  - python=3.9
   - pcraster
   - cartopy
-  - rasterio>=1.1
-  - fiona
-  - rtree>=0.9.3
-  - click>=7.0
+  - rasterio
+  - geopandas
+  - click
   - configparser
-  - numpy>=1.12
-  - scipy>=1.0
-  - gdal>=3
-  - netcdf4>=1.4.2
-  - pytz>=2019.3
-  - six>=1.14
-  - cftime>=1.0.1
-  - xarray>=0.11
-  - pyproj=2.4
-  - thrift>=0.11
-  - numba>=0.42
-  - pyinstaller>=3.3
+  - numpy=1.21
+  - scipy
+  - gdal
+  - jupyter
+  - netcdf4
+  - pytz
+  - six
+  - cftime
+  - xarray
+  - pyproj
+  - numba
+  - pyinstaller
   - setuptools_scm
-  - setuptools>=38
-  - pip>=20.0
-  - python-dateutil>=2.8
-  - sphinx
-  - sphinx_rtd_theme
+  - setuptools
+  - pip
+  - python-dateutil
   - matplotlib
-  - hvplot
-  - datashader
-  - bokeh
   - pcraster
   - wflow
   - pip:
     - bmi-python>=0.2.6
-    - pyviz
+    # - pyviz
     #- git+https://github.com/UU-Hydro/PCR_BMI.git@migrate_to_py3
     - git+https://github.com/openearth/glofrim.git
     #- git+https://github.com/openstreams/wflow.git

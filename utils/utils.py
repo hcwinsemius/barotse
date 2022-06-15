@@ -5,7 +5,7 @@ import numpy as np
 import rasterio
 import rasterio.features
 from scipy.signal import convolve2d
-import update_funcs
+# import .update_funcs
 
 def perpendicular(line, reverse=False):
     """
@@ -149,3 +149,29 @@ def merge_outputs(datas, time, x, y, names, attributes):
     :return: Dataset of all data in datas
     """
     return xr.merge([list_to_dataarray(data, time, x, y, name, attrs) for data, name, attrs in zip(datas, names, attributes)])
+
+
+def get_indexes(cbmi, gdf, model_name="WFL", x_off=None, y_off=None):
+    """Get indexes of grid cells in certain model (default wflow) for variable extraction.
+    x_off and y_off can be set to correct for slight mismatches in grid cell connections between
+    the two models (needs to be manually checked in GIS)
+
+    """
+    xy = gdf.geometry
+
+    y = xy.y.values
+    x = xy.x.values
+    if x_off is not None:
+        x += x_off
+    if y_off is not None:
+        y += y_off
+    idxs = cbmi.bmimodels[model_name].grid.index(x, y)
+    return idxs
+
+def update_runoff_bounds(cbmi, idxs, model_out="WFL", var_out="RiverRunoff", model_in="Sfincs", var_in="qsrc"):
+    flux_out = cbmi.bmimodels[model_out].get_value_at_indices(var_out, idxs)
+    flux_in = cbmi.bmimodels[model_in]._bmi.get_var(var_in)
+    # print(flux_in)
+    # overwrite discharges in all time steps
+    flux_in[:] = flux_out
+    cbmi.bmimodels[model_in]._bmi.set_var(var_in, flux_in)
