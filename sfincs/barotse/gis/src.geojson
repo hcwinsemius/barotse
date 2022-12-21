@@ -1,0 +1,19 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32734" } },
+"features": [
+{ "type": "Feature", "properties": { "index": 1, "uparea": 5900.36083984375 }, "geometry": { "type": "Point", "coordinates": [ 670544.908882353804074, 8457006.403283305466175 ] } },
+{ "type": "Feature", "properties": { "index": 2, "uparea": 5825.552734375 }, "geometry": { "type": "Point", "coordinates": [ 670554.073555028648116, 8244381.02351232804358 ] } },
+{ "type": "Feature", "properties": { "index": 3, "uparea": 33851.30078125 }, "geometry": { "type": "Point", "coordinates": [ 670570.608834029990248, 8460878.516871018335223 ] } },
+{ "type": "Feature", "properties": { "index": 4, "uparea": 12777.4892578125 }, "geometry": { "type": "Point", "coordinates": [ 670572.857668785261922, 8343874.979741376824677 ] } },
+{ "type": "Feature", "properties": { "index": 5, "uparea": 19872.845703125 }, "geometry": { "type": "Point", "coordinates": [ 670600.535146724432707, 8347747.415419511497021 ] } },
+{ "type": "Feature", "properties": { "index": 6, "uparea": 93324.015625 }, "geometry": { "type": "Point", "coordinates": [ 737336.777279358822852, 8463116.163930274546146 ] } },
+{ "type": "Feature", "properties": { "index": 7, "uparea": 44584.2578125 }, "geometry": { "type": "Point", "coordinates": [ 822237.081047230982222, 8463025.070461204275489 ] } },
+{ "type": "Feature", "properties": { "index": 8, "uparea": 44555.26953125 }, "geometry": { "type": "Point", "coordinates": [ 825303.234927090001293, 8463078.858134787529707 ] } },
+{ "type": "Feature", "properties": { "index": 9, "uparea": 18247.025390625 }, "geometry": { "type": "Point", "coordinates": [ 856417.726551710627973, 8456851.644661601632833 ] } },
+{ "type": "Feature", "properties": { "index": 10, "uparea": 18224.888671875 }, "geometry": { "type": "Point", "coordinates": [ 856452.284703659475781, 8459343.690970212221146 ] } },
+{ "type": "Feature", "properties": { "index": 11, "uparea": 18264.7890625 }, "geometry": { "type": "Point", "coordinates": [ 856489.931344714015722, 8455558.219038745388389 ] } },
+{ "type": "Feature", "properties": { "index": 12, "uparea": 7138.900390625 }, "geometry": { "type": "Point", "coordinates": [ 856527.61799413501285, 8345788.566213387995958 ] } },
+{ "type": "Feature", "properties": { "index": 13, "uparea": 6181.5107421875 }, "geometry": { "type": "Point", "coordinates": [ 856554.923902546404861, 8384194.75067453738302 ] } }
+]
+}
